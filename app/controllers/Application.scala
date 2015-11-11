@@ -9,6 +9,8 @@ import play.api.db._
 import domain._
 import play.api.libs.json.Json
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Success, Failure}
+import scala.concurrent.Future
 
 object Application extends Controller {
 
@@ -23,10 +25,9 @@ object Application extends Controller {
     Redirect(authURL)
   }
 
-  def instagramAuth(code: String) = Action.async(parse.json) { request =>
-    val insta = Instagram.instagramAuth(clientID, clientSecret, grantType, redirectURI, code)
-    insta.map{ actualJson => 
-      Ok(Json.toJson(actualJson))
-    }
+  def instagramAuth(code: String) = Action.async { request =>
+    for {
+      r <- Instagram.instagramAuth(clientID, clientSecret, grantType, redirectURI, code)
+    } yield Ok(views.html.index(r))
   }
 }

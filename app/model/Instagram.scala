@@ -12,11 +12,11 @@ import scala.util.Success
 
 object Instagram {
 
-  def instagramAuth(clientID: String, clientSecret: String, grantType: String, redirectURI: String, code: String) = {
+  def instagramAuth(clientID: String, clientSecret: String, grantType: String, redirectURI: String, code: String): Future[String] = {
 
     val url = "https://api.instagram.com/oauth/access_token"
 
-    for {
+    val response = for {
       response <- WS.url(url).post(Map[String, Seq[String]](
         "client_id" -> Seq(clientID),
         "client_secret" -> Seq(clientSecret),
@@ -28,10 +28,11 @@ object Instagram {
       response.json.as[InstagramAuth]
     }
 
-    // response.onSuccess {
-    //   case auth => createSubscription(clientID, clientSecret, auth)
+    // val result = response.onSuccess {
+    //   case auth => auth
     // }
 
-  }
+    response.map(_.accessToken)
 
+  }
 }
