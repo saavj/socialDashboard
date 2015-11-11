@@ -12,10 +12,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object Application extends Controller {
 
-  val clientID     = "5936a1918c2a4292ac852970f46becb2"
-  val clientSecret = "e175cb7bb3db4a0ea352ab1cb50556a5"
+  val clientID     = "d75a625dcf704a33af9f099dcf94cb3f"
+  val clientSecret = "afcb2989bd914e6d8a90715754db7eae"
   val grantType    = "authorization_code"
-  val redirectURI  = "http://ynapdashboard.herokuapp.com/instagramauth"
+  val redirectURI  = "http://allsocialdashboard.herokuapp.com/instagramauth"
 
   val authURL      = s"https://api.instagram.com/oauth/authorize/?client_id=$clientID&redirect_uri=$redirectURI&response_type=code"
 
