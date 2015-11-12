@@ -6,6 +6,9 @@
 GET   /               controllers.Application.index
 GET   /instagramauth  controllers.Application.instagramAuthentication(code: String)
 GET   /test			  controllers.Application.test
+# GET   /callback     controllers.Application.pubsubhubub
+POST  /callback       controllers.Application.instagramUpdates
+GET	  /actor	      controllers.Application.wsWithActor
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET   /assets/*file   controllers.Assets.at(path="/public", file)

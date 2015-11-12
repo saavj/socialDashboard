@@ -13,6 +13,7 @@ import scala.util.{Failure, Success}
 
 trait Instagram {
   def instagramAuth(clientID: String, clientSecret: String, grantType: String, redirectURI: String, code: String): Future[String]
+  def createSubscription(clientID: String, clientSecret: String, accessToken: String): String
 }
 
 object InstagramImpl extends Instagram {
@@ -35,9 +36,27 @@ object InstagramImpl extends Instagram {
         case _                          => None
       }
     }).map(o => o match {
-      case Some(at) => at
+      case Some(at) => createSubscription(clientID, clientSecret, at)
       case None     => "ERROR"
       })
 
+  }
+
+  def createSubscription(clientID: String, clientSecret: String, accessToken: String): String = {
+    val url = "https://api.instagram.com/v1/subscriptions/"
+    val callback = "http://allsocialdashboard.herokuapp.com/callback"
+
+    val response: Future[WSResponse] =
+      WS.url(url).post(Map[String, Seq[String]](
+        "client_id"     -> Seq(clientID),
+        "client_secret" -> Seq(clientSecret),
+        "object"        -> Seq("tag"),
+        "aspect"        -> Seq("media"),
+        "object_id"     -> Seq("nofilter"),
+        "verify_token"  -> Seq(accessToken),
+        "callback_url"  -> Seq(callback)
+      ))
+
+    accessToken
   }
 }

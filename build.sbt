@@ -21,3 +21,7 @@ resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 scalacOptions in Test ++= Seq("-Yrangepos")
 
 libraryDependencies <+= scalaVersion("org.scala-lang" % "scala-compiler" % _ )
+
+// Play provides two styles of routers, one expects its actions to be injected, the
+// other, legacy style, accesses its actions statically.
+routesGenerator := InjectedRoutesGenerator
