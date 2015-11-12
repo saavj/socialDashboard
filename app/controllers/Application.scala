@@ -28,6 +28,6 @@ object Application extends Controller {
   def instagramAuthentication(code: String) = Action.async { request =>
     for {
       r <- InstagramImpl.instagramAuth(clientID, clientSecret, grantType, redirectURI, code)
-    } yield Ok(Json.toJson(r))
+    } yield Ok(views.html.index(r))
   }
 }
