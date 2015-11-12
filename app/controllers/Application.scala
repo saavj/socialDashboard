@@ -4,7 +4,7 @@ import play.api._
 import play.api.mvc._
 import play.api.cache.Cache
 import play.api.Play.current
-import model.Instagram
+import model._
 import play.api.db._
 import domain._
 import play.api.libs.json.Json
@@ -25,9 +25,9 @@ object Application extends Controller {
     Redirect(authURL)
   }
 
-  def instagramAuth(code: String) = Action.async { request =>
+  def instagramAuthentication(code: String) = Action.async { request =>
     for {
-      r <- Instagram.instagramAuth(clientID, clientSecret, grantType, redirectURI, code)
+      r <- InstagramImpl.instagramAuth(clientID, clientSecret, grantType, redirectURI, code)
     } yield Ok(Json.toJson(r))
   }
 }
