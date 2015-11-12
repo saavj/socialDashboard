@@ -25,6 +25,10 @@ object Application extends Controller {
     Redirect(authURL)
   }
 
+  def test = Action {
+    Ok(views.html.index("HEY"))
+  }
+
   def instagramAuthentication(code: String) = Action.async { request =>
     for {
       r <- InstagramImpl.instagramAuth(clientID, clientSecret, grantType, redirectURI, code)
