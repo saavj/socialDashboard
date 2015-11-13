@@ -16,40 +16,27 @@ class UpdateResponseSpec extends Specification {
            |
            |[
            |{
-           |"subscription_id": "1",
-           |"object": "user",
-           |"object_id": "1234",
-           |"changed_aspect": "media",
-           |"time": 1297286541
-           |},
-           |{
-           |"subscription_id": "2",
-           |"object": "tag",
-           |"object_id": "nofilter",
-           |"changed_aspect": "media",
-           |"time": 1297286541
+           |"changed_aspect":"media",
+           |"object":"tag",
+           |"object_id":"nofilter",
+           |"time":1447446332,
+           |"subscription_id":20795686,
+           |"data":{}
            |}
            |]
            |
          """.stripMargin)
 
-      val caseClass = json.as[Seq[UpdateResponse]]
-      val topSub = caseClass.head
-      val botSub = caseClass.last
+      val caseClass = json.as[UpdateResponse]
 
-      json                    mustEqual Json.toJson(caseClass)
+      json                       mustEqual Json.toJson(caseClass)
 
-      topSub.subscription_id  mustEqual "1"
-      topSub.updateObject     mustEqual "user"
-      topSub.objectId         mustEqual "1234"
-      topSub.changedAspect    mustEqual "media"
-      topSub.time             mustEqual 1297286541
+      caseClass.subscription_id  mustEqual "1"
+      caseClass.updateObject     mustEqual "user"
+      caseClass.objectId         mustEqual "1234"
+      caseClass.changedAspect    mustEqual "media"
+      caseClass.time             mustEqual 1297286541
 
-      botSub.subscription_id  mustEqual "2"
-      botSub.updateObject     mustEqual "tag"
-      botSub.objectId         mustEqual "nofilter"
-      botSub.changedAspect    mustEqual "media"
-      botSub.time             mustEqual 1297286541
     }
   }
 

@@ -50,7 +50,7 @@ class Application@Inject()(ws: WSClient, system: ActorSystem) extends Controller
          |${request.body}
          |
        """.stripMargin)
-    val mediaUpdate: Seq[UpdateResponse] = request.body.as[Seq[UpdateResponse]]
+    val mediaUpdate: UpdateResponse = request.body.as[UpdateResponse]
     println(
       s"""
          |

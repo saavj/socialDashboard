@@ -53,6 +53,8 @@ object Instagram {
 
     logger.info("Call to create subscription " + response)
 
-    accessToken
+    response.map(_.json \ "data" \ "object") match {
+      case x => x.toString
+    }
   }
 }
