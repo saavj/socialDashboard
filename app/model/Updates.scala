@@ -4,9 +4,10 @@ import akka.actor.ActorRef
 import domain._
 import play.api.libs.json.{JsString, JsValue}
 import play.api.libs.ws.WS
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.Success
+import play.api.Play.current
 
 object Updates {
   var counter:Int = 0
