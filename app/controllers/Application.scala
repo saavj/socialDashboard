@@ -45,6 +45,13 @@ class Application @Inject()(ws: WSClient, system: ActorSystem) extends Controlle
     } yield Ok(views.html.index(r))
   }
 
+  def pubsubhubub() = Action { request =>
+    request.getQueryString("hub.challenge") match {
+      case Some(hubChallenge) => Ok(hubChallenge)
+      case None               => BadRequest
+    }
+  }
+
   def instagramUpdates() = Action(parse.json) { request =>
     val mediaUpdate: Seq[UpdateResponse] = request.body.as[Seq[UpdateResponse]]
     Updates.instagram(mediaUpdate, clientID, actors)

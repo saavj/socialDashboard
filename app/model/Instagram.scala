@@ -1,6 +1,7 @@
 package model
 
 import javax.inject.Inject
+import play.api.Logger
 import play.api.libs.json.{JsDefined, JsString, Json}
 
 import scala.concurrent.Future
@@ -18,6 +19,8 @@ trait Instagram {
 
 object InstagramImpl extends Instagram {
 
+  val logger: Logger = Logger("instagram")
+
   def instagramAuth(clientID: String, clientSecret: String, grantType: String, redirectURI: String, code: String): Future[String] = {
 
     val url = "https://api.instagram.com/oauth/access_token"
@@ -31,14 +34,14 @@ object InstagramImpl extends Instagram {
         "code" -> Seq(code)
       ))
     } yield {
-      response.json \ "access_token" match {
-        case JsDefined(JsString(token)) => Some(token)
-        case _                          => None
-      }
-    }).map(o => o match {
+        response.json \ "access_token" match {
+          case JsDefined(JsString(token)) => Some(token)
+          case _ => None
+        }
+      }).map {
       case Some(at) => createSubscription(clientID, clientSecret, at)
-      case None     => "ERROR"
-      })
+      case None => "ERROR"
+    }
 
   }
 
@@ -56,6 +59,8 @@ object InstagramImpl extends Instagram {
         "verify_token"  -> Seq(accessToken),
         "callback_url"  -> Seq(callback)
       ))
+
+    logger.info("Call to create subscription " + response)
 
     accessToken
   }
