@@ -1,10 +1,9 @@
 package domain
 
-import play.api.libs.json.{Json, Format, JsPath}
 import play.api.libs.functional.syntax._
-import play.api.libs.concurrent.Execution.Implicits._
+import play.api.libs.json.{Format, JsPath}
 
-case class UpdateResponse(subscription_id: String, updateObject: String, objectId: String, changed_aspect: String, time: Int)
+case class UpdateResponse(subscription_id: String, updateObject: String, objectId: String, changedAspect: String, time: Int)
 object UpdateResponse {
   implicit val updateFormat: Format[UpdateResponse] = (
     (JsPath \ "subscription_id").format[String] and

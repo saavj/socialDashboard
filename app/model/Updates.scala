@@ -1,16 +1,18 @@
 package model
 
+import akka.actor.ActorRef
 import domain._
-import akka.actor.{Actor, ActorRef, PoisonPill, Props, ActorSystem}
-import play.api.libs.json.{JsValue, JsString, JsDefined}
-import play.api.libs.ws._
 import play.api.Play.current
+import play.api.libs.json.JsString
+import play.api.libs.ws._
+
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
 import scala.util.Success
 
-
-object Updates {
+trait Updates {
+  def instagram(mediaUpdate: Seq[UpdateResponse], clientID: String, actors: List[ActorRef]): Unit
+}
+object UpdatesImpl extends Updates {
   var counter:Int = 0
   var startTime:Long = System.currentTimeMillis
   var currentTime:Long = 0
@@ -29,7 +31,7 @@ object Updates {
     getPost(mediaUpdate, clientID, noOfPosts, actors)
   }
 
-  def getMedia(objectID: String, clientID: String, index: Int, actors: List[ActorRef]): Unit = {
+  private def getMedia(objectID: String, clientID: String, index: Int, actors: List[ActorRef]): Unit = {
       val url = s"https://api.instagram.com/v1/tags/netaporter/media/recent?client_id=$clientID"
 
       val response = for {

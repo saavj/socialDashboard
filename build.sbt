@@ -11,9 +11,13 @@ libraryDependencies ++= Seq(
   cache,
   "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",
   ws,
-  "org.specs2" %% "specs2-core"  % "3.6.5" % "test",
-  "org.specs2" %% "specs2-junit" % "3.6.5" % "test",
-  "org.specs2" %% "specs2-mock"  % "3.6.5" % "test"
+  specs2 % Test,
+  "org.specs2" %% "specs2-scalacheck" % "3.6" % "test",
+  "org.specs2" %% "specs2-matcher-extra" % "3.6" % "test",
+  "net.codingwell"              %% "scala-guice"     % "4.0.0",
+  "pl.matisoft"                 %% "swagger-play24"  % "1.4",
+  "com.typesafe.scala-logging"  %% "scala-logging"   % "3.1.0",
+  "com.netaporter"              %% "scala-uri"       % "0.4.9"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
