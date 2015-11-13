@@ -9,10 +9,7 @@ import play.api.libs.ws._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.Success
 
-trait Updates {
-  def instagram(mediaUpdate: Seq[UpdateResponse], clientID: String, actors: List[ActorRef]): Unit
-}
-object UpdatesImpl extends Updates {
+object Updates {
   var counter:Int = 0
   var startTime:Long = System.currentTimeMillis
   var currentTime:Long = 0

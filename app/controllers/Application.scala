@@ -10,9 +10,7 @@ import play.api.libs.ws.WSClient
 import javax.inject.Inject
 import akka.actor.{Actor, ActorRef, PoisonPill, Props, ActorSystem}
 
-class Application@Inject
-(instagram: Instagram,
-  updates: Updates)(ws: WSClient, system: ActorSystem) extends Controller {
+class Application@Inject()(ws: WSClient, system: ActorSystem) extends Controller {
 
   var actors:List[ActorRef] = Nil
 
@@ -33,7 +31,7 @@ class Application@Inject
 
   def instagramAuthentication(code: String) = Action.async { request =>
     for {
-      r <- instagram.instagramAuth(clientID, clientSecret, grantType, redirectURI, code)
+      r <- Instagram.instagramAuth(clientID, clientSecret, grantType, redirectURI, code)
     } yield Ok(views.html.index(r))
   }
 
@@ -60,7 +58,7 @@ class Application@Inject
          |$mediaUpdate
          |
        """.stripMargin)
-    updates.instagram(mediaUpdate, clientID, actors)
+    Updates.instagram(mediaUpdate, clientID, actors)
     Ok("")
 
   }

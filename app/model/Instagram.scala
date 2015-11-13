@@ -1,23 +1,14 @@
 package model
 
-import javax.inject.Inject
 import play.api.Logger
-import play.api.libs.json.{JsDefined, JsString, Json}
+import play.api.Play.current
+import play.api.libs.concurrent.Execution.Implicits._
+import play.api.libs.json.{JsDefined, JsString}
+import play.api.libs.ws._
 
 import scala.concurrent.Future
-import play.api.Play.current
 
-import play.api.mvc._
-import play.api.libs.ws._
-import play.api.libs.concurrent.Execution.Implicits._
-import scala.util.{Failure, Success}
-
-trait Instagram {
-  def instagramAuth(clientID: String, clientSecret: String, grantType: String, redirectURI: String, code: String): Future[String]
-  def createSubscription(clientID: String, clientSecret: String, accessToken: String): String
-}
-
-object InstagramImpl extends Instagram {
+object Instagram {
 
   val logger: Logger = Logger("instagram")
 
