@@ -30,6 +30,13 @@ object Updates {
 
       response.onComplete {
         case Success(Some(JsString(image))) => {
+          println(
+            s"""
+               |+++++++++++++++++++++++++++++++
+               |$image
+               |
+               |
+             """.stripMargin)
           actors foreach { actor =>
             actor ! image
           }
