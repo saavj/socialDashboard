@@ -27,15 +27,13 @@ class UpdateResponseSpec extends Specification {
            |
          """.stripMargin)
 
-      val caseClass = json.as[UpdateResponse]
+      val caseClass = json.as[Seq[UpdateResponse]].head
 
-      json                       mustEqual Json.toJson(caseClass)
-
-      caseClass.subscription_id  mustEqual "1"
-      caseClass.updateObject     mustEqual "user"
-      caseClass.objectId         mustEqual "1234"
+      caseClass.subscription_id  mustEqual 20795686
+      caseClass.updateObject     mustEqual "tag"
+      caseClass.objectId         mustEqual "nofilter"
       caseClass.changedAspect    mustEqual "media"
-      caseClass.time             mustEqual 1297286541
+      caseClass.time             mustEqual 1447446332
 
     }
   }

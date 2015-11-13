@@ -14,14 +14,14 @@ object Updates {
   var startTime:Long = System.currentTimeMillis
   var currentTime:Long = 0
 
-  def instagram(mediaUpdate: UpdateResponse, clientID: String, actors: List[ActorRef]): Unit = {
+  def instagram(mediaUpdate: Seq[UpdateResponse], clientID: String, actors: List[ActorRef]): Unit = {
 
-    val noOfPosts = mediaUpdate.data.length
+    val noOfPosts = mediaUpdate.length
 
-    def getPost(mediaUpdate: UpdateResponse, clientID: String, index: Int, actors: List[ActorRef]): Unit = {
+    def getPost(mediaUpdate: Seq[UpdateResponse], clientID: String, index: Int, actors: List[ActorRef]): Unit = {
 
       if(index > 0) {
-        getMedia(mediaUpdate.objectId, clientID, index, actors)
+        getMedia(mediaUpdate.head.objectId, clientID, index, actors)
         getPost(mediaUpdate, clientID, index - 1, actors)
       }
     }
