@@ -31,7 +31,7 @@ object Updates {
       response.onComplete {
         case Success(Some(JsString(image))) => {
           actors foreach { actor =>
-            actor ! url
+            actor ! image
           }
         }
         case _ => println("NO")
