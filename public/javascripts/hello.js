@@ -5,7 +5,7 @@ var exampleSocket = new WebSocket("ws://allsocialdashboard.herokuapp.com/actor")
 exampleSocket.onmessage = function (event) {
   console.log(event.data);
 
-  $("#gallery").append(galleryHtml.replace("insert url here", event.data));
+  $("#gallery").prepend(galleryHtml.replace("insert url here", event.data));
 }
 
 var i = 1;
